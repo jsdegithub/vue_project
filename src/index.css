@@ -1,0 +1,13 @@
+p{
+    background-color: lightskyblue;
+    font-size: 36px;
+    color: ghostwhite;
+}
+body{
+    background: url('./img/yinghua.jpg');
+}
+a{
+    font-size: 28px;
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(187, 152, 233);
+}

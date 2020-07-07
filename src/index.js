@@ -1,11 +1,31 @@
 import Vue from 'vue/dist/vue.js';
 import app from './app.vue';
 
-import { Header, Swipe, SwipeItem, Button } from 'mint-ui';
+// 按需导入
+/* import { Header, Swipe, SwipeItem, Button, Lazyload } from 'mint-ui';
 Vue.component(Header.name, Header);
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
 Vue.component(Button.name, Button);
+Vue.use(Lazyload); */
+// 全部导入
+import MintUI from 'mint-ui';
+Vue.use(MintUI);
+import 'mint-ui/lib/style.css';
+
+import VuePreview from 'vue-preview';
+Vue.use(VuePreview);
+/* Vue.use(VuePreview, {
+    mainClass: 'pswp--minimal--dark',
+    barsSize: {top: 0, bottom: 0},
+    captionEl: false,
+    fullscreenEl: false,
+    shareEl: false,
+    bgOpacity: 0.85,
+    tapToClose: true,
+    tapToToggleControls: false
+  }) */
+
 
 import './mui/css/mui.min.css';
 import './mui/css/icons-extra.css';
@@ -18,6 +38,7 @@ import router from './router.js';
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
 Vue.http.options.root = 'http://api.cms.liulongbin.top';
+Vue.http.options.emulateJSON=true;
 
 
 let dateFormat = function (dateStr) {

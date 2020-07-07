@@ -1,0 +1,16 @@
+.thumbs .my-gallery figure img{
+    margin: 0;
+    width: 268px;
+    height: 166px;
+    vertical-align: middle;
+    box-shadow: 0 0 8px #999;
+    border-radius: 8px;
+  }
+
+.thumbs .my-gallery figure{
+    text-align: center;
+}
+
+.thumbs{
+    padding: 0;
+}

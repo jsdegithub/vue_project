@@ -40,6 +40,97 @@ Vue.use(VueResource);
 Vue.http.options.root = 'http://api.cms.liulongbin.top';
 Vue.http.options.emulateJSON=true;
 
+import Vuex from 'vuex';
+Vue.use(Vuex);
+let store=new Vuex.Store({
+    state:{
+        car:JSON.parse(localStorage.getItem('car')) || []
+    },
+    mutations:{
+        addToCar(state, goodsinfo){
+            let flag=false;
+            state.car.some(item=>{
+                if(item.id==goodsinfo.id){
+                    item.count+=parseInt(goodsinfo.count);
+                    flag=true;
+                    return true;
+                }
+            });
+            if(flag===false){
+                state.car.push(goodsinfo);
+            }
+            localStorage.setItem('car', JSON.stringify(state.car));
+        },
+        updateGoodsInfo(state, goodsinfo){
+            state.car.some(item=>{
+                if(item.id==goodsinfo.id){
+                    item.count=parseInt(goodsinfo.count);
+                    return true;
+                }
+            })
+            localStorage.setItem('car', JSON.stringify(state.car));
+        },
+        removeFromCar(state, id){
+            state.car.some((item, index)=>{
+                if(item.id==id){
+                    state.car.splice(index, 1);
+                    return true;
+                }
+            })
+            localStorage.setItem('car', JSON.stringify(state.car));
+        },
+        updateSelected(state, params_obj){
+            state.car.some(item=>{
+                if(item.id==params_obj.id){
+                    item.selected=params_obj.selected;
+                    return true;
+                }
+            })
+            localStorage.setItem('car', JSON.stringify(state.car));
+        },
+    },
+    getters: {
+        getAllCount(state){
+            let total_count=0;
+            state.car.forEach(item=>{
+                total_count+=item.count;
+            })
+            return total_count;
+        },
+        getAllSelected(state){
+            let total_count=0;
+            state.car.forEach(item=>{
+                if(item.selected==true){
+                    total_count+=item.count;
+                }
+            })
+            return total_count;
+        },
+        getTotalPrice(state){
+            let total_price=0;
+            state.car.forEach(item=>{
+                if(item.selected==true){
+                    total_price+=item.price * item.count;
+                }
+            })
+            return total_price;
+        },
+        getGoodsCount(state){
+            let goods_count={};
+            state.car.forEach(item=>{
+                goods_count[item.id]=item.count;
+            });
+            return goods_count;
+        },
+        getGoodsSelected(state){
+            let goods_selected={};
+            state.car.forEach(item=>{
+                goods_selected[item.id]=item.selected;
+            })
+            return goods_selected;
+        }
+    }
+});
 
 let dateFormat = function (dateStr) {
     let date = new Date(dateStr);
@@ -65,5 +156,6 @@ let vm = new Vue({
     render: function (createElement, context) {
         return createElement(app);
     },
-    router
+    router,
+    store
 })
